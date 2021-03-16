@@ -52,6 +52,7 @@ void menu_search(){
         if(input == "n") break;
     }
 }
+
 void menu(){
     int option;
     while(true){
@@ -79,8 +80,6 @@ void menu(){
 }
 
 int main(int argc, char** argv) {
-    // CsvConverter csvConverter("../cep.txt");
-    // csvConverter.convertFile("cep_pipe.csv");
     SequentialSearch searcher("cep_pipe.txt");
     cout << searcher.search("RUA L", 0) << endl;
     menu();
