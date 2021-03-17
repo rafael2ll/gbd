@@ -129,6 +129,7 @@ void menu(){
             break;
         case 3:
             menu_pos_search();
+            break;
         case 4:
             exit(0);
         default:
