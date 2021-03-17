@@ -80,8 +80,6 @@ void menu(){
 }
 
 int main(int argc, char** argv) {
-    SequentialSearch searcher("cep_pipe.txt");
-    cout << searcher.search("RUA L", 0) << endl;
     menu();
     return 0;
 }
