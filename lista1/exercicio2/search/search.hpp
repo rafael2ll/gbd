@@ -17,4 +17,11 @@ class SequentialSearch{
         bool search(item row, std::string term, int field_position);
 };
 
+class IndexedSearch{
+    public:
+        std::string filename;
+        IndexedSearch(void);
+        IndexedSearch(std::string filename);
+        void search(int index, item &result);
+};
 #endif // SEARCH_HPP

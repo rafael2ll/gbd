@@ -1,7 +1,13 @@
 #include "./converter/converter.hpp"
 #include "search/search.hpp"
 #include <string.h>
+#include <chrono>
+
 using namespace std;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::duration;
+using std::chrono::milliseconds;
 
 string formmater(int size){
     return string(size, ':');
@@ -44,7 +50,48 @@ void menu_search(){
             cin.ignore(1,'\n');
             cout << "Termo a ser buscado: ";
             getline(cin, term);
+            auto time_init = high_resolution_clock::now();
             searcher.search(term, field, found);
+            auto time_end = high_resolution_clock::now();
+            if(strcmp(found.uf,"nan") == 0)
+                cout << endl << "Nenhum resultado encontrado" << endl;
+            else{
+                 cout << endl << "Resultado: " << endl;
+                 cout <<'\t' << "CEP: " << found.cep << endl;
+                 cout <<'\t' << "UF: " << found.uf << endl;
+                 cout <<'\t' << "Cidade: " << found.cidade << endl;
+                 cout <<'\t' << "Logradouro: " << found.logradouro << endl;
+            }
+            duration<double, std::milli> ms_double = time_end - time_init;
+            cout << endl << "Duracao: " << ms_double.count() << "ms" << endl;
+        }
+        cout << endl << "Fazer nova busca [Y/n]: ";
+        getline(cin, input);
+        if(input == "n") break;
+    }
+}
+void menu_pos_search(){
+    string input;
+    int index;
+    item found;
+    cout << formmater(10) << " Busca por Posicao " << formmater(10) << endl;
+    cout << "Nome do arquivo de busca [cep_binary.txt] :";
+    getline(cin, input);
+    if(input.empty())  
+        input = "cep_binary.txt";
+
+    IndexedSearch searcher(input);
+    while(true){
+        cout << "Digite o indice do item: ";
+        cin >> index;
+        cin.ignore(1,'\n');
+        index--;
+        if(index < 0){
+            cout << "Insira um valor positivo maior que 0" << endl;
+        }else{
+            auto time_init = high_resolution_clock::now();
+            searcher.search(index, found);
+            auto time_end = high_resolution_clock::now();
             if(strcmp(found.uf,"nan") == 0)
                 cout << endl << "Nenhum resultado encontrado" << endl;
             else{
@@ -54,20 +101,22 @@ void menu_search(){
                  cout <<'\t' <<"Cidade: " << found.cidade << endl;
                  cout <<'\t' <<"Logradouro: " << found.logradouro << endl;
             }
+            duration<double, std::milli> ms_double = time_end - time_init;
+            cout << endl << "Duracao: " << ms_double.count() << "ms" << endl;
         }
         cout << endl << "Fazer nova busca [Y/n]: ";
         getline(cin, input);
         if(input == "n") break;
     }
 }
-
 void menu(){
     int option;
     while(true){
         cout << formmater(10) << " Menu " << formmater(10) << endl;
         cout << "1. Converter arquivo" << endl;
         cout << "2. Busca sequencial" << endl;
-        cout << "3. Sair" << endl;
+        cout << "3. Busca por posicao" << endl;
+        cout << "4. Sair" << endl;
         cout << "Insira a opcao: ";
         cin >> option;
         cin.ignore(1,'\n');
@@ -79,6 +128,8 @@ void menu(){
             menu_search();
             break;
         case 3:
+            menu_pos_search();
+        case 4:
             exit(0);
         default:
             break;

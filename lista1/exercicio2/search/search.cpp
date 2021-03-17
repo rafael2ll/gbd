@@ -13,6 +13,10 @@ SequentialSearch::SequentialSearch(string file){
     filename = file;
 }
 
+IndexedSearch::IndexedSearch(string file){
+    filename = file;
+}
+
 void SequentialSearch::search(string term, int field_index, item &result){
     string line;
     ifstream tsv(filename);
@@ -43,3 +47,16 @@ bool SequentialSearch::search(item row, string term, int field){
     }
 }
 
+void IndexedSearch::search(int index, item &result){
+    item it;
+    ifstream tsv(filename);
+    int seekTo = sizeof(item)*index;
+    tsv.seekg(seekTo, tsv.beg);
+    if(tsv.read((char *) &it, sizeof(item))) { 
+        result.cep = it.cep;
+        strcpy(result.uf, it.uf);
+        strcpy(result.cidade, it.cidade);
+        strcpy(result.logradouro, it.logradouro);
+    }else 
+        strcpy(result.uf, "nan");
+}
