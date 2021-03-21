@@ -8,6 +8,15 @@ using std::chrono::duration_cast;
 using std::chrono::duration;
 using std::chrono::milliseconds;
 
+/**
+    Nomes e Matrículas:
+
+    Rafael Valentim     11711BCC010
+    Matheus José        11711BCC008
+    Leonardo Essia      11712BCC009
+
+**/
+
 string formmater(int size){
     return string(size, ':');
 }
@@ -16,13 +25,14 @@ void menu_convert(){
     string input;
     string output;
     string outputIndex;
+    
     cout << formmater(10) << " Conversao " << formmater(10) << endl;
     cout << "Nome do arquivo de entrada [cep.txt] :";
+
     getline(cin, input);
     cout << "Nome do arquivo de saida [cep_pipe.txt]: ";
     getline(cin, output);
-    cout << "Nome do arquivo de saida de index [index.txt]: ";
-    getline(cin, outputIndex);
+
     if(input.empty()) input = "../cep.txt";
     if(output.empty()) output = "cep_pipe.txt";
     if(outputIndex.empty()) outputIndex = "index.txt";
