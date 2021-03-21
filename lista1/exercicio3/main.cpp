@@ -41,38 +41,6 @@ void menu_convert(){
     cout << endl << "Arquivo de registros " << output << " e arquivo de index " << outputIndex << " gerado com sucesso." << endl;
 }
 
-void menu_search(){
-    string input;
-    int field;
-    string term;
-    cout << formmater(10) << " Busca Sequencial " << formmater(10) << endl;
-    cout << "Nome do arquivo de busca [cep_pipe.txt] :";
-    getline(cin, input);
-    if(input.empty())  
-        input = "cep_pipe.txt";
-    SequentialSearch searcher(input);
-    while(true){
-        cout << "Campo de busca: " << endl << "(1) Endereco\t(2) Cidade\t(3)UF\t(4)CEP" <<endl;
-        cout << "Digite o numero da opcao desejada: ";
-        cin >> field;
-        field--;
-        if(field > 3 || field < 0){
-            cout << "Valor fora dos possiveis" << endl;
-        }else{
-            cin.ignore(1,'\n');
-            cout << "Termo a ser buscado: ";
-            getline(cin, term);
-            string result = searcher.search(term, field);
-            if(result.empty())
-                cout << endl << "Nenhum resultado encontrado" << endl;
-            else cout << endl << "Resultado: " << result << endl;
-        }
-        cout << endl << "Fazer nova busca [Y/n]: ";
-        getline(cin, input);
-        if(input == "n") break;
-    }
-}
-
 void menu_pos_search(){
     string input;
     
