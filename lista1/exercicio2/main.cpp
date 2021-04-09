@@ -9,6 +9,15 @@ using std::chrono::duration_cast;
 using std::chrono::duration;
 using std::chrono::milliseconds;
 
+/**
+    Nomes e Matrículas:
+
+    Rafael Valentim     11711BCC010
+    Matheus José        11711BCC008
+    Leonardo Essia      11712BCC009
+
+**/
+
 string formmater(int size){
     return string(size, ':');
 }
