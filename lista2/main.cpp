@@ -1,7 +1,13 @@
-/* 
- * File:   main.cpp
- * Author: seunome
- */
+/**
+ *  Desenvolvido e testado no Linux: 
+ *      g++ -o main main.cpp && ./main
+ * 
+ *  Authors:
+ *   Rafael Valentim     11711BCC010
+ *   Matheus José        11711BCC008
+ *   Leonardo Essia      11712BCC009
+**/
+
 
 #include <list>
 #include <stdlib.h>
