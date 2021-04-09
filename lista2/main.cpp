@@ -80,16 +80,24 @@ public:
         
         char *found = new char[50]; 
         int next_size;
-        int i = 0;
+        int i = 0, pos = 0;
         while (!feof(fd)) {
             fread(&next_size, 1, sizeof(int), fd);
-            fread(found, next_size, sizeof(char), fd);
+            pos += 4;
+            int cur = ehRegistroRemovido(pos);
+            if(cur >= 0){
+                fseek(fd, cur, SEEK_SET);
+                pos = cur;
+            }else{
+                fread(found, next_size, sizeof(char), fd);
+                pos += next_size;
+                i++;
+            }
             if(strcmp(palavra, found) == 0){
                 fseek(fd, 0, SEEK_SET);
                 return ++i;
             }
              memset(found, 0, sizeof(char)*50); 
-             i++;
         }
         fseek(fd, 0, SEEK_SET);
         // retornar -1 caso nao encontrar
@@ -119,6 +127,16 @@ private:
         return -1;
     }
 
+    // Verifica se a posicao atual pertence a um registro removido
+    int ehRegistroRemovido(int pos){
+        list <Removido> :: iterator it;
+        for(it = removidos.begin(); it != removidos.end(); ++it){
+            if(it->pos == pos){
+                return it->pos + it->tamanho;
+            }
+        }
+        return -1;
+    }
     // Funcao que mantem o cabecalho atualizado
     void atualizarCabecalho(bool add, int bytes_added){
         cabecalho.disponivel += bytes_added;
